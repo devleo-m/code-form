@@ -12,4 +12,5 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npx", "nodemon", "--watch", "src", "--exec", "ts-node", "src/index.ts"]
+#CMD ["npm", "start"]
