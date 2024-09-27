@@ -1,0 +1,76 @@
+services:
+  app:
+    image: node:21.7.3-alpine
+    build: .
+    container_name: code-form-app
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - postgres_dev
+    networks:
+      - code-form-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-code-form
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - code-form-network
+
+  postgres_dev:
+    image: postgres:14
+    container_name: code-form-dev
+    environment:
+      POSTGRES_USER: ${DB_USERNAME_DEV}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_DEV}
+      POSTGRES_DB: ${DB_NAME_DEV}
+    ports:
+      - '${DB_PORT_DEV}:5432'
+    volumes:
+      - dev_data:/var/lib/postgresql/data
+    networks:
+      - code-form-network
+
+  postgres_test:
+    image: postgres:14
+    container_name: code-form-test
+    environment:
+      POSTGRES_USER: ${DB_USERNAME_TEST}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_TEST}
+      POSTGRES_DB: ${DB_NAME_TEST}
+    ports:
+      - '${DB_PORT_TEST}:5432'
+    volumes:
+      - test_data:/var/lib/postgresql/data
+    networks:
+      - code-form-network
+
+  postgres_prod:
+    image: postgres:14
+    container_name: code-form-prod
+    environment:
+      POSTGRES_USER: ${DB_USERNAME_PROD}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_PROD}
+      POSTGRES_DB: ${DB_NAME_PROD}
+    ports:
+      - '${DB_PORT_PROD}:5432'
+    volumes:
+      - prod_data:/var/lib/postgresql/data
+    networks:
+      - code-form-network
+
+volumes:
+  dev_data:
+  test_data:
+  prod_data:
+
+networks:
+  code-form-network:
+    driver: bridge
