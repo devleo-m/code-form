@@ -1,11 +1,11 @@
 {
   "name": "code-form",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/web/server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "nodemon src/index.ts",
-    "prod": "node dist/index.js",
+    "start": "node dist/web/server.js",
+    "dev": "nodemon --watch src --exec ts-node src/web/server.ts",
     "test": "jest"
   },
   "keywords": [],
