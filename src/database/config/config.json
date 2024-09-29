@@ -1,0 +1,9 @@
+{
+    "username": "root",
+    "password": "root",
+    "database": "code-form",
+    "host": "localhost",
+    "port": 5433,
+    "dialect": "postgres"
+}
+

@@ -11,9 +11,6 @@ const config: Options = {
   port: 5433,
   dialect: "postgres",
   logging: console.log,
-  dialectOptions: {
-    connectTimeout: 10000, // 10 segundos
-  }
 };
 
 export = config;
