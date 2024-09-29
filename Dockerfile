@@ -1,10 +1,10 @@
-FROM node:21.7.3-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
@@ -12,5 +12,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npx", "nodemon", "--watch", "src", "--exec", "ts-node", "src/index.ts"]
-#CMD ["npm", "start"]
+CMD ["npm", "start"]
